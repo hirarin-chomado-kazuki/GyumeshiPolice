@@ -1,0 +1,86 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ResourceDictionary.ThemeDictionaries>
+        <ResourceDictionary x:Key="Default">
+            <Color x:Key="BasicColor">#FFCC5D</Color>
+            <Color x:Key="AccentColor">#DB9500</Color>
+            <Color x:Key="LightColor">#FFEBC1</Color>
+            <Color x:Key="DarkColor">#332200</Color>
+        </ResourceDictionary>
+    </ResourceDictionary.ThemeDictionaries>
+
+    <Style x:Key="NavigationRadioButtonStyle"
+		   TargetType="RadioButton">
+
+        <Setter Property="Background"
+				Value="Transparent" />
+        <Setter Property="TabNavigation"
+				Value="Local" />
+        <Setter Property="IsHoldingEnabled"
+				Value="True" />
+        <Setter Property="HorizontalAlignment"
+				Value="Stretch" />
+        <Setter Property="HorizontalContentAlignment"
+				Value="Stretch" />
+        <Setter Property="VerticalContentAlignment"
+				Value="Center" />
+        <Setter Property="Height"
+				Value="44" />
+        <Setter Property="UseSystemFocusVisuals"
+				Value="True" />
+        <Setter Property="Padding"
+				Value="5,0,10,0" />
+        <Setter Property="Margin"
+				Value="0" />
+        <Setter Property="FontWeight"
+				Value="Normal" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="RadioButton">
+                    <Grid x:Name="RootBorder"
+						  Height="{TemplateBinding Height}"
+						  Background="{TemplateBinding Background}"
+						  BorderBrush="{TemplateBinding BorderBrush}"
+						  BorderThickness="{TemplateBinding BorderThickness}">
+                        
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CheckStates">
+                                <VisualState x:Name="Checked">
+                                    <VisualState.Setters>
+                                        <Setter Target="Border.Visibility"
+												Value="Visible" />
+                                        <Setter Target="ContentPresenter.FontWeight"
+												Value="Bold" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="Unchecked" />
+                                <VisualState x:Name="Indeterminate" />
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+
+                        <ContentPresenter x:Name="ContentPresenter"
+										  ContentTemplate="{TemplateBinding ContentTemplate}"
+										  ContentTransitions="{TemplateBinding ContentTransitions}"
+										  Content="{TemplateBinding Content}"
+										  Margin="{TemplateBinding Padding}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+										  VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+
+                        <Rectangle x:Name="Border"
+								   HorizontalAlignment="Left"
+								   VerticalAlignment="Stretch"
+								   Width="7"
+								   Fill="{ThemeResource DarkColor}"
+								   Visibility="Collapsed"
+								   IsHitTestVisible="False" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    
+
+</ResourceDictionary>

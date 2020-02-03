@@ -1,0 +1,168 @@
+﻿<Page
+    x:Class="GyumeshiPolice.Views.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:GyumeshiPolice.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:wasm="http:/uno.ui/wasm"
+    xmlns:not_wasm="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:toolkit="using:Uno.UI.Toolkit"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource LightColor}"
+          toolkit:VisibleBoundsPadding.PaddingMask="All">
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="621" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="SplitView.DisplayMode" Value="CompactInline" />
+                        <Setter Target="SplitView.IsPaneOpen" Value="True" />
+                        <Setter Target="HamburgerButton.IsChecked" Value="True" />
+                        <Setter Target="HamburgerButton.IsHitTestVisible" Value="False" />
+                        <Setter Target="HamburgerIcon.Visibility" Value="Collapsed" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="SplitView.DisplayMode" Value="CompactOverlay" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            
+            <!-- ハンバーガーボタン -->
+            <ToggleButton x:Name="HamburgerButton" 
+                          Foreground="{ThemeResource AppBarBackgroundThemeBrush}"
+                          Background="{ThemeResource LightColor}"
+                          BorderBrush="{ThemeResource DarkColor}"
+                          BorderThickness="1"
+                          Grid.Column="0"
+                          Width="85"
+                          Margin="5"
+                          VerticalAlignment="Center">
+                <ToggleButton.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <SymbolIcon x:Name="HamburgerIcon"
+                                    Symbol="{x:Bind local:SymbolEx.GlobalNavigationButton}"
+                                    Foreground="{ThemeResource DarkColor}"
+                                    Margin="0,0,10,0" />
+                        <TextBlock Text="Menu"
+                                   Foreground="{ThemeResource DarkColor}"/>
+                    </StackPanel>
+                </ToggleButton.Content>
+            </ToggleButton>
+            <StackPanel x:Name="LogoPanel"
+                        Grid.Column="1"
+                        HorizontalAlignment="Center">
+                <Image x:Name="HeaderLogo"
+                       Source="ms-appx:///Assets/square44x44logo.scale-200.png"
+                       Height="40" />
+                <TextBlock Text="牛めし警察"
+                           Style="{ThemeResource TitleTextBlockStyle}" 
+                           Margin="5,0"
+                           FontSize="10"/>
+            </StackPanel>
+        </Grid>
+        
+        <SplitView x:Name="SplitView"
+                   Grid.Row="1"
+                   CompactPaneLength="0" OpenPaneLength="320"
+                   PaneBackground="DarkSeaGreen"
+                   IsPaneOpen="{Binding IsChecked, ElementName=HamburgerButton, Mode=TwoWay}"
+                   RelativePanel.Below="HamburgerButton"
+                   RelativePanel.AlignLeftWithPanel="True"
+                   RelativePanel.AlignRightWithPanel="True"
+                   RelativePanel.AlignBottomWithPanel="True">
+
+            <!-- メニュー -->
+            <SplitView.Pane>
+                <ListView x:Name="ListViewPane" 
+                          SelectionMode="None"
+                          Background="{ThemeResource AccentColor}">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="Margin" Value="0" />
+                            <Setter Property="Padding" Value="0" />
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListViewItem>
+                        <RadioButton x:Name="RadioButtonDetect"
+                                     Checked="RadioButtonDetect_Checked"
+                                     GroupName="Navigation"
+                                     Style="{StaticResource NavigationRadioButtonStyle}">
+                            <StackPanel Orientation="Horizontal">
+                                <SymbolIcon Symbol="Find" Width="48" />
+                                <TextBlock Text="捜査（牛めし判定）" Style="{ThemeResource BodyTextBlockStyle}" />
+                            </StackPanel>
+                        </RadioButton>
+                    </ListViewItem>
+                    <ListViewItem>
+                        <RadioButton x:Name="RadioButtonExam"
+                                     Checked="RadioButtonExam_Checked"
+                                     GroupName="Navigation"
+                                     Style="{StaticResource NavigationRadioButtonStyle}">
+                            <StackPanel Orientation="Horizontal">
+                                <SymbolIcon Symbol="ReportHacked" Width="48" />
+                                <TextBlock Text="昇進試験（クイズ）" Style="{ThemeResource BodyTextBlockStyle}" />
+                            </StackPanel>
+                        </RadioButton>
+                    </ListViewItem>
+
+                    <ListViewItem>
+                        <RadioButton x:Name="RadioButtonAbout"
+                                     Checked="RadioButtonAbout_Checked"
+                                     GroupName="Navigation"
+                                     Style="{StaticResource NavigationRadioButtonStyle}">
+                            <StackPanel Orientation="Horizontal">
+                                <SymbolIcon Symbol="Important" Width="48" />
+                                <TextBlock Text="About" Style="{ThemeResource BodyTextBlockStyle}" />
+                            </StackPanel>
+                        </RadioButton>
+                    </ListViewItem>
+
+                    <ListViewItem>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="ms-appx:///Assets/github.png" Width="38" Margin="10,0,5,0" />
+                            <TextBlock Style="{ThemeResource BodyTextBlockStyle}"
+                                        Margin="0,8,0,0">
+                                <Hyperlink NavigateUri="https://github.com/hirarin-chomado-kazuki/"
+                                           TextDecorations="None"
+                                           Foreground="Black">
+                                    GitHub
+                                </Hyperlink>
+                            </TextBlock>
+                        </StackPanel>
+                    </ListViewItem>
+
+                </ListView>
+            </SplitView.Pane>
+
+            <!-- メイン -->
+            <SplitView.Content>
+                <Frame x:Name="ContentFrame" />
+            </SplitView.Content>
+        </SplitView>
+
+    </Grid>
+</Page>
