@@ -160,7 +160,8 @@
 
             <!-- メイン -->
             <SplitView.Content>
-                <Frame x:Name="ContentFrame" />
+                <Frame x:Name="ContentFrame"
+                       x:FieldModifier="public"/>
             </SplitView.Content>
         </SplitView>
 
