@@ -43,7 +43,7 @@ namespace GyumeshiPolice
         /// <param name="e">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
-            var mainPage = Window.Current.Content as MainPage;
+            var mainPage = Windows.UI.Xaml.Window.Current.Content as MainPage;
             if (mainPage == null)
             {
                 mainPage = new MainPage();
@@ -71,6 +71,27 @@ namespace GyumeshiPolice
                 // Ensure the current window is active
                 Windows.UI.Xaml.Window.Current.Activate();
             }
+
+            // 戻るボタン対応
+            Windows.UI.Core.SystemNavigationManager.GetForCurrentView().BackRequested += (s, args) =>
+            {
+                // 戻れない場合は何もしない
+                if (!mainPage.ContentFrame.CanGoBack)
+                {
+                    return;
+                }
+
+                // 戻れる場合はフレームの GoBack メソッドを呼んで
+                mainPage.ContentFrame.GoBack();
+                // 戻るボタンを処理したことを通知する
+                args.Handled = true;
+
+                // さらに戻れない場合は戻るボタンを無効化
+                if (!mainPage.ContentFrame.CanGoBack)
+                {
+                    Windows.UI.Core.SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = Windows.UI.Core.AppViewBackButtonVisibility.Collapsed;
+                }
+            };
         }
 
         /// <summary>

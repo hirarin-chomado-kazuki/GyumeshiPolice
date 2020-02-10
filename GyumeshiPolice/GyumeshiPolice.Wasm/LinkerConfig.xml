@@ -6,4 +6,7 @@
 	<!-- This is required by JSon.NET and any expression.Compile caller -->
 	<type fullname="System.Linq.Expressions*" />
   </assembly>
+  <assembly fullname="Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction">
+    <type fullname="Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction.Models*" />
+  </assembly>
 </linker>

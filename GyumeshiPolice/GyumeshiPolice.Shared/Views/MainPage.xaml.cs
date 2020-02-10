@@ -37,6 +37,11 @@ namespace GyumeshiPolice.Views
         {
             ContentFrame.Navigate(page, null, new SuppressNavigationTransitionInfo());
 
+            // 戻るボタン対応
+            Windows.UI.Core.SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = ContentFrame.CanGoBack
+                ? Windows.UI.Core.AppViewBackButtonVisibility.Visible
+                : Windows.UI.Core.AppViewBackButtonVisibility.Collapsed;
+
             // 画面が狭いとき（CompactOverlay のとき）だけ閉じるようにする
             SplitView.IsPaneOpen = (SplitView.DisplayMode != SplitViewDisplayMode.CompactOverlay);
         }

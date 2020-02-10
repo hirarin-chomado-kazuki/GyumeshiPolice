@@ -3,11 +3,16 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:GyumeshiPolice"
+    xmlns:converters="using:GyumeshiPolice.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
+    <Page.Resources>
+        <converters:BooleanToVisibilityConverter x:Key="boolToVisibility" IsInverse="True" />
+    </Page.Resources>
+    
     <Grid Background="{ThemeResource BasicColor}">
         <Grid.RowDefinitions>
             <RowDefinition Height="2*" />
@@ -19,22 +24,29 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        
-        <Image Source="ms-appx:///Assets/square150x150logo.scale-200.png"
+
+        <Image Source="{x:Bind ViewModel.ImageSource, Mode=OneWay}"
                Height="Auto"
                Margin="10"
                Grid.Row="0"
-               Grid.ColumnSpan="3" />
+               Grid.ColumnSpan="3"
+               Visibility="{x:Bind ViewModel.IsProgressRingActive, Mode=OneWay, Converter={StaticResource boolToVisibility}}" />
+
+        <ProgressRing x:Name="ProgressRing"
+                      IsActive="{x:Bind ViewModel.IsProgressRingActive, Mode=OneWay}"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center"
+                      Width="80"
+                      Grid.Row="0"
+                      Grid.ColumnSpan="3" />
 
         <TextBlock x:Name="MessageTextBlock"
                    Grid.Row="1"
                    Grid.ColumnSpan="3"
                    Margin="10"
                    TextWrapping="Wrap"
-                   TextAlignment="Center">
-            カメラを起動して牛めし/牛丼判定をしてみよう！<LineBreak />
-            すでに撮影済みの写真も使えるよ
-        </TextBlock>
+                   TextAlignment="Center"
+                   Text="{x:Bind ViewModel.Message, Mode=OneWay}" />
 
         <Button Height="Auto"
                 Width="Auto"
@@ -52,10 +64,11 @@
                 VerticalAlignment="Center"
                 HorizontalAlignment="Center"
                 Grid.Row="2"
-                Grid.Column="1">
+                Grid.Column="1"
+                Command="{x:Bind ViewModel.CameraCommand}">
             <Image Source="ms-appx:///Assets/camera.png" />
         </Button>
-        
+
         <Button Height="Auto"
                 Width="Auto"
                 Margin="20"
@@ -63,7 +76,7 @@
                 HorizontalAlignment="Center"
                 Grid.Row="2"
                 Grid.Column="2"
-                Command="{x:Bind ViewModel.FileCommand}" >
+                Command="{x:Bind ViewModel.FileCommand}">
             <Image Source="ms-appx:///Assets/folder.png" />
         </Button>
     </Grid>
