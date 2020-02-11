@@ -51,5 +51,20 @@ namespace GyumeshiPolice
                 _config.CustomVisionSettings.PublishedName, stream);
 #endif
         }
+
+        public static string ToShopName(string tagName)
+        {
+            switch(tagName)
+            {
+                case "Matsuya":
+                    return "松屋";
+                case "Yoshinoya":
+                    return "吉野家";
+                case "Sukiya":
+                    return "すき家";
+                default:
+                    return "その他";
+            };
+        }
     }
 }

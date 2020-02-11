@@ -4,9 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Windows.Foundation;
 using Windows.Media.Capture;
-using Windows.UI.Popups;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
@@ -105,10 +103,10 @@ namespace GyumeshiPolice.ViewModels
 
                 var predictions = result.Predictions
                     .OrderByDescending(r => r.Probability)
-                    .Select(r => (TagName: r.TagName, Probability: Math.Round(r.Probability * 100, 3)));
+                    .Select(r => (ShopName: CustomVisionHelper.ToShopName(r.TagName), Probability: Math.Round(r.Probability * 100, 3)));
 
-                Message = $@"{predictions.First().TagName}の確率: {predictions.First().Probability}％
-({string.Join(", ", predictions.Skip(1).Select(r => $"{r.TagName}: {r.Probability}％"))})";
+                Message = $@"{predictions.First().ShopName}の確率: {predictions.First().Probability}％
+({string.Join(", ", predictions.Skip(1).Select(r => $"{r.ShopName}: {r.Probability}％"))})";
 
                 ImageSource = source;
 
